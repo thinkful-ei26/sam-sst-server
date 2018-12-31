@@ -23,7 +23,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.json({msg: 'Hello World'});
+  res.json({msg: 'Hello SST, woo hoo'});
 });
 
 function runServer(port = PORT) {
