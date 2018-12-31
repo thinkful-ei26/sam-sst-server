@@ -22,6 +22,10 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.json({msg: 'Hello World'});
+});
+
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
