@@ -1,28 +1,25 @@
 'use strict';
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const {StudentSchema} = require('../students/models');
 
 mongoose.Promise = global.Promise;
 
 const UserSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  username: {type: String, required: true,unique: true},
+  password: {type: String, required: true},
   firstName: {type: String, default: ''},
-  lastName: {type: String, default: ''}
+  lastName: {type: String, default: ''},
+  students: [StudentSchema]
+
 });
 
 UserSchema.methods.serialize = function() {
   return {
-    username: this.username || '',
+    username: this.username,
     firstName: this.firstName || '',
-    lastName: this.lastName || ''
+    lastName: this.lastName || '',
+    id: this._id
   };
 };
 

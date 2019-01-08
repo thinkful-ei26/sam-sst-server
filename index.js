@@ -18,6 +18,7 @@ const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
 const app = express();
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -36,11 +37,17 @@ passport.use(jwtStrategy);
 
 app.use('/api/notes', notesRouter);
 app.use('/api/students', studnetRouter);
-app.use('/api/users', userRouter);
-app.use('/api/auth/login', authRouter);
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
 
 app.get('/user', (req, res) => {
   res.json({msg: 'Hello SST, woo hoo'});
+});
+
+app.get('/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'rosebud'
+  });
 });
 
 function runServer(port = PORT) {

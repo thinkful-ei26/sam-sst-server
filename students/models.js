@@ -1,20 +1,27 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const {NoteSchema} = require('../notes/models');
 
 
-const studentSchema = new mongoose.Schema({
+const StudentSchema = new mongoose.Schema({
   name: {type: String, required: true},
   goals: {type: String, },
+  notes: [NoteSchema]
+  // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+
   
 });
 
-studentSchema.set('timestamps', true);
+// StudentSchema.index({name:1, userId:1}, {unique: true});
 
-studentSchema.methods.serialize = function() {
+StudentSchema.set('timestamps', true);
+
+StudentSchema.methods.serialize = function() {
   return {
     name: this.name || '',
     goals: this.goals || '',
+    id: this._id
   };
 };
 
@@ -26,6 +33,6 @@ studentSchema.methods.serialize = function() {
 //   }
 // });
 
-const Student = mongoose.model('Student', studentSchema);
+const Student = mongoose.model('Student', StudentSchema);
 
-module.exports = {Student};
+module.exports = {Student, StudentSchema};

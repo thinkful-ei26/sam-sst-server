@@ -3,16 +3,19 @@
 const mongoose = require('mongoose');
 
 
-const noteSchema = new mongoose.Schema({
+const NoteSchema = new mongoose.Schema({
   subjective: {type: String},
   objective: {type: String, required: true},
   assessment: {type: String},
   plan: {type: String, },
+  // studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true }
 });
 
-noteSchema.set('timestamps', true);
+// NoteSchema.index({title:1, studentId:1}, {unique: true});
 
-noteSchema.methods.serialize = function() {
+NoteSchema.set('timestamps', true);
+
+NoteSchema.methods.serialize = function() {
   return {
     subjective: this.subjective || '',
     objective: this.objective || '',
@@ -21,7 +24,7 @@ noteSchema.methods.serialize = function() {
   };
 };
 
-// noteSchema.set('toJSON', {
+// NoteSchema.set('toJSON', {
 //   virtuals: true,
 //   transform: (doc, result) => {
 //     delete result._id;
@@ -29,6 +32,6 @@ noteSchema.methods.serialize = function() {
 //   }
 // });
 
-const Note = mongoose.model('Note', noteSchema);
+const Note = mongoose.model('Note', NoteSchema);
 
-module.exports = {Note};
+module.exports = {Note, NoteSchema};
