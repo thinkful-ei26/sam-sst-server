@@ -20,7 +20,7 @@ NoteSchema.methods.serialize = function() {
     subjective: this.subjective || '',
     objective: this.objective || '',
     assessment: this.assessment || '',
-    plan: this.plan || ''
+    plan: this.plan || ' '
   };
 };
 
