@@ -4,8 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-// const mongoose = require('mongoose');
-// const passport = require('passport');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const {Student} = require('./models');
@@ -13,11 +11,7 @@ const jsonParser = bodyParser.json();
 const { User } = require('../users/models');
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-
-// router.get('/whoami', (req, res, next) => {
-//   res.json(req.user);
-// });
-// router.use(jwtAuth);
+router.use(jwtAuth);
 router.use(bodyParser.json());
 
 router.get('/:userId', (req, res) => {
@@ -45,6 +39,22 @@ router.post('/:userId', (req, res) => {
           return  res.send(err);
         }
         res.json(user);
+      });
+    });
+});
+
+router.delete('/:userId', (req, res) => {
+
+  User.findById(req.params.userId)
+    .then(user => {
+
+      user.students.id(req.body.studentId).remove();
+
+      user.save(err => {
+        if (err) {
+          res.send(err);
+        }
+        res.json(user.students);
       });
     });
 });

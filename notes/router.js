@@ -3,13 +3,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');
-// const passport = require('passport');
+const passport = require('passport');
 const router = express.Router();
-const {Note} = require('./models');
-const jsonParser = bodyParser.json();
-const { Student } = require('../students/models');
+// const {Note} = require('./models');
+// const jsonParser = bodyParser.json();
+// const { Student } = require('../students/models');
 const { User } = require('../users/models');
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
+router.use(jwtAuth);
 
 router.use(bodyParser.json());
 
