@@ -11,13 +11,13 @@ const router = express.Router();
 const { User } = require('../users/models');
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-router.use(jwtAuth);
+// router.use(jwtAuth);
 
 router.use(bodyParser.json());
 
 router.get('/:userId/:studentId', (req, res) => {
   // const { id } = req.params.studentId;
-  console.log('studentId:',req.params.studentId);
+  // console.log('studentId:',req.params.studentId);
   User.findById(req.params.userId)
   // User.findById({ _id: req.params.studentId, })
   // User.findById({'users.studnets._id': ObjectId(req.params.studentId)})
@@ -56,7 +56,7 @@ router.post('/:userId/:studentId', (req, res) => {
         if (err) {
           res.send(err);
         }
-        res.json(user);
+        res.json(note);
       });
     });
 });

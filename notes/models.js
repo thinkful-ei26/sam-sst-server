@@ -8,6 +8,7 @@ const NoteSchema = new mongoose.Schema({
   objective: {type: String, required: true},
   assessment: {type: String},
   plan: {type: String, },
+  // createdAt    : { type: Date, required: true, default: Date.now }
   // studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true }
 });
 
@@ -20,7 +21,8 @@ NoteSchema.methods.serialize = function() {
     subjective: this.subjective || '',
     objective: this.objective || '',
     assessment: this.assessment || '',
-    plan: this.plan || ' '
+    plan: this.plan || ' ',
+    // createdAt: this.createdAt
   };
 };
 
